@@ -21,7 +21,7 @@ class OrganizationProfile extends Model
         'phone_number',
         'website_url',
         'logo_path',
-        'verification_status',
+        'status',
         'verified_by',
         'verified_at',
     ];

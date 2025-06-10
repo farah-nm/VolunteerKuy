@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -37,7 +38,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'organization',
         ]);
+        Log::info('Mencoba membuat OrganizationProfile untuk user ID: ' . $user->id . ' dengan nama: ' . $request->organization_name);
 
+        try {
         OrganizationProfile::create([
             'user_id' => $user->id,
             'name' => $request->organization_name,
@@ -54,6 +57,10 @@ class AuthController extends Controller
             'verified_at' => null,
             // isi field profil organisasi lainnya
         ]);
+        } catch (\Exception $e) {
+            Log::error('Gagal membuat OrganizationProfile: ' . $e->getMessage());
+            return redirect()->route('register.organization')->with('error', 'Terjadi kesalahan saat membuat profil organisasi. Silakan coba lagi.');
+        }
 
         event(new Registered($user));
 

@@ -45,6 +45,24 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($user) {
+            if ($user->isDirty('status') && $user->status === 'suspended' && $user->role === 'organization') {
+                if ($user->organizationProfile) {
+                    $user->organizationProfile->update(['status' => 'suspended']);
+                }
+            } elseif ($user->isDirty('status') && $user->status !== 'suspended' && $user->role === 'organization') {
+                if ($user->organizationProfile && $user->organizationProfile->status === 'suspended') {
+                    // Anda bisa menambahkan logika di sini jika ingin mengaktifkan kembali status di organization_profiles
+                    // Misalnya: $user->organizationProfile->update(['status' => 'active']);
+                }
+            }
+        });
+    }
+
      public function organizationProfile()
     {
         return $this->hasOne(OrganizationProfile::class, 'user_id');

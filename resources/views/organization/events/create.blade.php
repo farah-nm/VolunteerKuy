@@ -10,7 +10,7 @@
                     <h2 class="text-xl font-semibold mb-4">Tambah Event Baru</h2>
                     <form action="{{ route('organization.events.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @include('organization.events.partials.form')
+                        @include('organization.events.partials._form')
                         <div class="flex items-center justify-end mt-4">
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-md focus:outline-none focus:shadow-outline">
                                 Tambah Event

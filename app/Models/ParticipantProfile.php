@@ -13,6 +13,14 @@ class ParticipantProfile extends Model
     protected $fillable = [
         'user_id', // Tambahkan baris ini
         'full_name',
+        'date_of_birth',
+        'gender',
+        'phone_number',
+        'address',
+        'city',
+        'province',
+        'profile_picture_path',
+
         // tambahkan kolom lain yang ingin Anda izinkan untuk mass assignment
     ];
 

@@ -49,7 +49,12 @@ class AuthController extends Controller
         ParticipantProfile::create([
             'user_id' => $user->id,
             'full_name' => $request->full_name,
-            // isi field profil partisipan lainnya jika ada di form
+            'gender',
+            'phone_number',
+            'address',
+            'city',
+            'province',
+            'profile_picture_path',
         ]);
 
         event(new Registered($user));

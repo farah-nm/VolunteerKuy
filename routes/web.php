@@ -53,12 +53,13 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('reports', AdminReportController::class)->only(['index', 'edit', 'update']);
-    Route::resource('accounts', AdminAccountController::class)->only(['index', 'edit', 'update']);
-});
+    Route::resource('accounts', AdminAccountController::class)->parameter('accounts', 'user')->only(['index', 'edit', 'update']);});
+
 Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
     Route::get('/dashboard', [OrganizationDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile/edit', [OrganizationProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [OrganizationProfileController::class, 'update'])->name('profile.update');    Route::resource('events', OrganizationEventController::class);
+    Route::put('/profile', [OrganizationProfileController::class, 'update'])->name('profile.update');
+    Route::resource('events', OrganizationEventController::class);
     Route::get('/volunteers', [OrganizationVolunteerController::class, 'index'])->name('volunteers.index');
     Route::resource('donations', OrganizationDonationController::class)->only(['index', 'create', 'store']); // Assuming create for report
     Route::get('/donations/report', [OrganizationDonationController::class, 'createReport'])->name('donations.report.create');
@@ -71,19 +72,12 @@ Route::middleware(['auth', 'role:participant'])->prefix('participant')->name('pa
     Route::get('/events/{event}', [ParticipantEventController::class, 'show'])->name('events.show');
     Route::get('/profile/edit', [ParticipantProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ParticipantProfileController::class, 'update'])->name('profile.update');
-
-    // Route untuk pendaftaran relawan
     Route::get('/volunteer-registrations/create', [ParticipantVolunteerRegistrationController::class, 'create'])->name('volunteer-registrations.create');
     Route::post('/volunteer-registrations', [ParticipantVolunteerRegistrationController::class, 'store'])->name('volunteer-registrations.store');
-
-    // Route untuk donasi
     Route::get('/donations', [ParticipantDonationController::class, 'index'])->name('donations.index');
     Route::get('/donations/create', [ParticipantDonationController::class, 'create'])->name('donations.create');
     Route::post('/donations', [ParticipantDonationController::class, 'store'])->name('donations.store');
-
-    // Route untuk laporan
     Route::resource('reports', ParticipantReportController::class)->only(['index', 'create', 'store', 'show']);
-    // ... route partisipan lainnya
 
 });
 

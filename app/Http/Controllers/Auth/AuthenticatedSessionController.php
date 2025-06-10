@@ -31,6 +31,10 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
+        if ($user->status === 'suspended') {
+            Auth::logout();
+            return redirect()->route('login')->withErrors(['email' => 'Akun Anda telah diblokir. Silakan hubungi admin untuk informasi lebih lanjut.']);
+        }
         // Redirect berdasarkan role
         if ($user->role === 'admin') {
             return redirect()->intended('/admin/dashboard');
@@ -39,6 +43,7 @@ class AuthenticatedSessionController extends Controller
         } else {
             return redirect()->intended('/participant/dashboard');
         }
+
     }
 
     /**

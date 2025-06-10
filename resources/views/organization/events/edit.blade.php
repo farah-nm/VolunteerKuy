@@ -11,7 +11,7 @@
                     <form action="{{ route('organization.events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        @include('organization.events.partials.form', ['event' => $event])
+                        @include('organization.events.partials._form', ['event' => $event])
                         <div class="flex items-center justify-end mt-4">
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-700 text-white font-bold rounded-md focus:outline-none focus:shadow-outline">
                                 Update Event

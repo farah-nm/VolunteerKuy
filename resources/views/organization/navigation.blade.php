@@ -4,13 +4,13 @@
             <div class="flex items-center">
                 <div class="shrink-0">
                     <a href="{{ route('organization.dashboard') }}">
-                        <span class="font-semibold text-xl">Panel Organisasi</span>
+                        <span class="font-semibold text-xl">Halaman Organisasi</span>
                     </a>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="{{ route('organization.dashboard') }}" class="bg-green-700 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
-                        <a href="{{ route('organization.profile.edit') }}" class="text-green-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Akun</a>
+                        <a href="{{ route('organization.profile.edit') }}" class="text-green-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profil</a>
                         <a href="{{ route('organization.events.index') }}" class="text-green-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Manajemen Event</a>
                         <a href="{{ route('organization.volunteers.index') }}" class="text-green-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Manajemen Relawan</a>
                         <a href="{{ route('organization.donations.index') }}" class="text-green-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Manajemen Donasi</a>
@@ -42,7 +42,7 @@
     <div class="md:hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="{{ route('organization.dashboard') }}" class="bg-green-700 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
-            <a href="{{ route('organization.profile.edit') }}" class="text-green-200 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Akun</a>
+            <a href="{{ route('organization.profile.edit') }}" class="text-green-200 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Profil</a>
             <a href="{{ route('organization.events.index') }}" class="text-green-200 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Manajemen Event</a>
             <a href="{{ route('organization.volunteers.index') }}" class="text-green-200 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Manajemen Relawan</a>
             <a href="{{ route('organization.donations.index') }}" class="text-green-200 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Manajemen Donasi</a>

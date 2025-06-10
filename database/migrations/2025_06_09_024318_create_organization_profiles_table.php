@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('website_url')->nullable();
             $table->string('logo_path')->nullable();
-            $table->enum('verification_status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['active', 'suspended'])->default('active');
             $table->foreignId('verified_by')->nullable()->constrained('users');
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();

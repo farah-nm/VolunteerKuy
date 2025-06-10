@@ -10,27 +10,38 @@ use Illuminate\Http\RedirectResponse;
 
 class DonationController extends Controller
 {
+    public function create(): View
+    {
+        // Anda mungkin ingin menampilkan daftar organisasi atau event untuk didonasi
+        return view('participant.donations.create');
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'organization_profile_id' => 'nullable|exists:organization_profiles,id', // Atau event_id
+            'amount' => 'required|numeric|min:1000', // Contoh validasi jumlah donasi
+            'payment_method' => 'nullable|string|max:255',
+            'notes' => 'nullable|string|max:500',
+        ]);
+
+        Donation::create([
+            'participant_profile_id' => auth()->user()->participantProfile->id,
+            'organization_profile_id' => $request->organization_profile_id, // Atau event_id
+            'amount' => $request->amount,
+            'payment_method' => $request->payment_method,
+            'notes' => $request->notes,
+            'donation_date' => now(),
+        ]);
+
+        return redirect()->route('participant.donations.index')->with('success', 'Donasi Anda telah diterima. Terima kasih!');
+    }
+
     public function index(): View
     {
-        $organizationId = auth()->user()->organizationProfile->id;
-        $donations = Donation::whereHas('volunteerActivity', function ($query) use ($organizationId) {
-            $query->where('organization_profile_id', $organizationId);
-        })->with('participantProfile', 'volunteerActivity')
+        $donations = Donation::where('participant_profile_id', auth()->user()->participantProfile->id)
             ->latest()
             ->paginate(10);
-        return view('organization.donations.index', compact('donations'));
-    }
-
-    public function createReport(): View
-    {
-        return view('organization.donations.report');
-    }
-
-    public function storeReport(Request $request): RedirectResponse
-    {
-        // Implementasikan logika penyimpanan laporan donasi di sini
-        // Misalnya, Anda bisa membuat model atau tabel terpisah untuk laporan dana donasi
-        // Sementara ini, kita akan redirect kembali dengan pesan sukses
-        return redirect()->route('organization.donations.index')->with('success', 'Laporan dana donasi berhasil ditambahkan.');
+        return view('participant.donations.index', compact('donations'));
     }
 }
