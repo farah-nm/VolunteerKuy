@@ -47,7 +47,7 @@ class User extends Authenticatable
 
      public function organizationProfile()
     {
-        return $this->hasOne(OrganizationProfile::class);
+        return $this->hasOne(OrganizationProfile::class, 'user_id');
     }
 
     public function participantProfile()

@@ -1,4 +1,4 @@
-{{-- @extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Dashboard Admin')
 
@@ -28,11 +28,4 @@
             </div>
         </div>
     </div>
-@endsection --}}
-@extends('layouts.admin')
-
-@section('title', 'Dashboard Admin')
-
-@section('content')
-    <h1>Ini adalah Test Dashboard Admin</h1>
 @endsection

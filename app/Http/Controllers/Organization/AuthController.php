@@ -18,20 +18,21 @@ class AuthController extends Controller
 {
     public function showRegistrationForm(): View
     {
-        return view('auth.register');
+        return view('organization.auth.register');
     }
 
     public function register(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:' . User::class],
+            'organization_name' => ['required', 'string', 'max:255', 'unique:' . User::class . ',name'], // Validasi untuk nama organisasi (akan disimpan sebagai name di users)
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'organization',
             // tambahkan validasi untuk field profil organisasi lainnya
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->organization_name, // Gunakan organization_name untuk kolom name di users
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'organization',
@@ -40,6 +41,17 @@ class AuthController extends Controller
         OrganizationProfile::create([
             'user_id' => $user->id,
             'name' => $request->organization_name,
+            'description' => '',
+            'address' => '',
+            'city' => '',
+            'province' => '',
+            'postal_code' => '',
+            'phone_number' => '',
+            'website_url' => '',
+            'logo_path' => '',
+            'verification_status' => 'pending',
+            'verified_by' => null,
+            'verified_at' => null,
             // isi field profil organisasi lainnya
         ]);
 

@@ -8,8 +8,17 @@ use App\Http\Controllers\Admin\AccountController as AdminAccountController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Organization\AuthController as OrganizationAuthController; // Tambahkan baris ini
 use App\Http\Controllers\Organization\DashboardController as OrganizationDashboardController;
-use App\Http\Controllers\Participant\AuthController as ParticipantAuthController; // Tambahkan baris ini
+use App\Http\Controllers\Organization\DonationController as OrganizationDonationController;
+use App\Http\Controllers\Organization\EventController as OrganizationEventController;
+use App\Http\Controllers\Organization\ProfileController as OrganizationProfileController;
+use App\Http\Controllers\Organization\VolunteerController as OrganizationVolunteerController;
+use App\Http\Controllers\Participant\ProfileController as ParticipantProfileController;
+use App\Http\Controllers\Participant\EventController as ParticipantEventController;
+use App\Http\Controllers\Participant\AuthController as ParticipantAuthController;
 use App\Http\Controllers\Participant\DashboardController as ParticipantDashboardController;
+use App\Http\Controllers\Participant\VolunteerRegistrationController as ParticipantVolunteerRegistrationController;
+use App\Http\Controllers\Participant\DonationController as ParticipantDonationController;
+use App\Http\Controllers\Participant\ReportController as ParticipantReportController;
 use App\Http\Controllers\ProfileController; // Pastikan ini ada jika Anda menggunakannya
 use App\Http\Middleware\RoleMiddleware;
 
@@ -48,12 +57,34 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
     Route::get('/dashboard', [OrganizationDashboardController::class, 'index'])->name('dashboard');
-    // ... route organisasi lainnya
+    Route::get('/profile/edit', [OrganizationProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [OrganizationProfileController::class, 'update'])->name('profile.update');    Route::resource('events', OrganizationEventController::class);
+    Route::get('/volunteers', [OrganizationVolunteerController::class, 'index'])->name('volunteers.index');
+    Route::resource('donations', OrganizationDonationController::class)->only(['index', 'create', 'store']); // Assuming create for report
+    Route::get('/donations/report', [OrganizationDonationController::class, 'createReport'])->name('donations.report.create');
+    Route::post('/donations/report', [OrganizationDonationController::class, 'storeReport'])->name('donations.report.store');
 });
 
 Route::middleware(['auth', 'role:participant'])->prefix('participant')->name('participant.')->group(function () {
     Route::get('/dashboard', [ParticipantDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/events', [ParticipantEventController::class, 'index'])->name('events.index');
+    Route::get('/events/{event}', [ParticipantEventController::class, 'show'])->name('events.show');
+    Route::get('/profile/edit', [ParticipantProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ParticipantProfileController::class, 'update'])->name('profile.update');
+
+    // Route untuk pendaftaran relawan
+    Route::get('/volunteer-registrations/create', [ParticipantVolunteerRegistrationController::class, 'create'])->name('volunteer-registrations.create');
+    Route::post('/volunteer-registrations', [ParticipantVolunteerRegistrationController::class, 'store'])->name('volunteer-registrations.store');
+
+    // Route untuk donasi
+    Route::get('/donations', [ParticipantDonationController::class, 'index'])->name('donations.index');
+    Route::get('/donations/create', [ParticipantDonationController::class, 'create'])->name('donations.create');
+    Route::post('/donations', [ParticipantDonationController::class, 'store'])->name('donations.store');
+
+    // Route untuk laporan
+    Route::resource('reports', ParticipantReportController::class)->only(['index', 'create', 'store', 'show']);
     // ... route partisipan lainnya
+
 });
 
 Route::middleware('auth')->group(function () {
