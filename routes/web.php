@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController; // Ganti LoginController dengan ini
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\AccountController as AdminAccountController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Organization\AuthController as OrganizationAuthController; // Tambahkan baris ini
 use App\Http\Controllers\Organization\DashboardController as OrganizationDashboardController;
 use App\Http\Controllers\Participant\AuthController as ParticipantAuthController; // Tambahkan baris ini
@@ -41,9 +43,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    // ... route admin lainnya
+    Route::resource('reports', AdminReportController::class)->only(['index', 'edit', 'update']);
+    Route::resource('accounts', AdminAccountController::class)->only(['index', 'edit', 'update']);
 });
-
 Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
     Route::get('/dashboard', [OrganizationDashboardController::class, 'index'])->name('dashboard');
     // ... route organisasi lainnya
