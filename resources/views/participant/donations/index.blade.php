@@ -1,10 +1,8 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Riwayat Donasi') }}
-        </h2>
-    </x-slot>
+@extends('layouts.participant')
 
+@section('title', 'Dashboard Partisipan')
+
+@section('content')
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -24,7 +22,8 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($donations as $donation)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $donation->donation_date }}</td>
+                                        {{-- <td class="px-6 py-4 whitespace-nowrap">{{ $donation->donation_date }}</td> --}}
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $donation->created_at->format('d M Y') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($donation->amount) }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $donation->organizationProfile->name ?? '-' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $donation->payment_method ?? '-' }}</td>
@@ -43,4 +42,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

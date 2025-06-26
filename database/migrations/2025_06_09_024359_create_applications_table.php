@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('participant_profile_id')->constrained('participant_profiles')->onDelete('cascade');
             $table->foreignId('volunteer_activity_id')->constrained('volunteer_activities')->onDelete('cascade');
             $table->timestamp('application_date')->useCurrent();
-            $table->enum('status', ['pending', 'approved', 'rejected', 'withdrawn'])->default('pending');
+            $table->enum('status', ['approved'])->default('approved');
             $table->timestamp('processed_by_organization_at')->nullable();
             $table->text('rejection_reason')->nullable();
             $table->timestamps();

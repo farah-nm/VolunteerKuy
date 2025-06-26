@@ -1,41 +1,39 @@
 @extends('layouts.organization')
 
-@section('title', 'Dashboard Organisasi')
-
 @section('content')
-    <h1 class="text-2xl font-bold mb-6">
-        Selamat datang, {{ optional(Auth::user()->organizationProfile)->name ?? Auth::user()->name }}!
-    </h1>
 
-    <div class="mb-8">
-        <h2 class="text-xl font-semibold text-gray-800">Event Terbaru</h2>
-        <p class="text-sm text-gray-500">Berikut adalah daftar event yang sedang berlangsung atau akan datang.</p>
-    </div>
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <h1 class="text-2xl font-bold mb-1">Selamat Datang, {{ Auth::user()->name }}!</h1>
+        <p class="text-gray-600 mb-6">Ayo mulai buat event baru, pantau partisipasi, dan sebarkan dampak positif bersama!</p>
 
-    {{-- Tampilan list event --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach ($events as $event)
-            <div class="bg-white p-5 rounded-lg shadow hover:shadow-md transition">
-                <h3 class="text-lg font-bold text-blue-700">{{ $event->title }}</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @foreach ($events as $event)
+                <div class="bg-white rounded-xl shadow hover:shadow-md transition duration-200 overflow-hidden">
+                    <img src="{{ $event->banner_image_path ?? asset('default.jpg') }}" alt="Event Image" class="w-full h-40 object-cover">
 
-                {{-- Cegah error format() jika date null --}}
-                @if ($event->start_date && $event->end_date)
-                    <p class="text-sm text-gray-600">
-                        {{ \Carbon\Carbon::parse($event->start_date)->format('d M Y') }} –
-                        {{ \Carbon\Carbon::parse($event->end_date)->format('d M Y') }}
-                    </p>
-                @else
-                    <p class="text-sm text-gray-600">Tanggal belum tersedia</p>
-                @endif
 
-                <p class="mt-2 text-gray-700 text-sm line-clamp-3">
-                    {{ Str::limit($event->description, 100) }}
-                </p>
-
-                <a href="{{ route('organization.events.show', $event) }}" class="inline-block mt-3 text-blue-600 text-sm hover:underline">
-                    Lihat Detail
-                </a>
-            </div>
-        @endforeach
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold">{{ $event->title }}</h3>
+                        <p class="text-sm text-gray-500 mb-2">{{ $event->organizer_name }}</p>
+                        <div class="flex items-center text-sm text-gray-600 space-x-2 mb-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>{{ \Carbon\Carbon::parse($event->start_date)->format('d M Y') }} - {{ \Carbon\Carbon::parse($event->end_date)->format('d M Y') }}</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.657 16.657L13.414 12l4.243-4.243M6.343 7.757L10.586 12l-4.243 4.243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>
+                                {{ $event->location_address ?? '-' }},
+                                {{ $event->location_city ?? '-' }},
+                                {{ $event->location_province ?? '-' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 @endsection

@@ -21,7 +21,7 @@ class AuthController extends Controller
      */
     public function showRegistrationForm(): View
     {
-        return view('participant.auth.register'); // Anda bisa membuat view khusus di participant/auth
+        return view('participant.auth.register');
     }
 
     /**
@@ -35,8 +35,8 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => 'participant', // pastikan role diisi dengan 'participant'
-            // tambahkan validasi lain untuk profil partisipan jika diperlukan
+            'role' => 'participant',
+
         ]);
 
         $user = User::create([

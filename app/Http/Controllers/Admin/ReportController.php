@@ -12,7 +12,7 @@ class ReportController extends Controller
 {
     public function index(): View
     {
-        $reports = Report::with('participantProfile')->latest()->paginate(10); // Eager load participant profile and paginate
+        $reports = Report::with('participantProfile','organizationProfile')->latest()->paginate(10); // Eager load participant profile and paginate
         return view('admin.reports.index', compact('reports'));
     }
 

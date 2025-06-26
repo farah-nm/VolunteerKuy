@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('amount', 12, 2);
             $table->string('payment_method');
             $table->string('proof_path');
-            $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
+            $table->enum('status', ['verified']) ->default('verified');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

@@ -12,7 +12,7 @@ class DashboardController extends Controller
     {
         $organizationProfile = Auth::user()->organizationProfile;
 
-        $events = $organizationProfile->events()->latest()->take(6)->get();
+        $events = $organizationProfile->volunteerActivities()->latest()->take(6)->get();
 
         return view('organization.dashboard', compact('organizationProfile', 'events'));
     }

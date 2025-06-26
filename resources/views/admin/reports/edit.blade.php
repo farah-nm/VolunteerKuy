@@ -23,6 +23,17 @@
                         </div>
 
                         <div class="mb-4">
+                            <label for="supporting_evidence" class="block text-gray-700 text-sm font-bold mb-2">Bukti Pendukung</label>
+                            @if ($report->supporting_evidence_path)
+                                <p><a href="{{ $report->supporting_evidence_path }}" target="_blank">Lihat Bukti Pendukung</a></p>
+                            @elseif ($report->supporting_evidence)
+                                <p>{{ $report->supporting_evidence }}</p>
+                            @else
+                                <p>Tidak ada bukti pendukung.</p>
+                            @endif
+                        </div>
+
+                        <div class="mb-4">
                             <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status</label>
                             <select name="status" id="status" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 <option value="pending" {{ $report->status === 'pending' ? 'selected' : '' }}>Pending</option>

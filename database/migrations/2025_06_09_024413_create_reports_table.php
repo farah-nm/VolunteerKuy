@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('volunteer_activity_id')->constrained('volunteer_activities')->onDelete('cascade');
             $table->string('title');
             $table->text('description');
-            $table->enum('status', ['pending', 'processed', 'resolved'])->default('pending');
+            $table->enum('status', ['processed', 'resolved'])->default('processed');
             $table->timestamps();
         });
     }

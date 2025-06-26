@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+/**
+ * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Event[] $events
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -72,4 +74,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(ParticipantProfile::class);
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'organization_id');
+    }
+
+
 }

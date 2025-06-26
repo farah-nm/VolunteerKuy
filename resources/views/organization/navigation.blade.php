@@ -1,36 +1,39 @@
-<!-- layouts/organization.blade.php -->
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>@yield('title') | OrganisasiKu</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex min-h-screen bg-gray-100">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-blue-700 text-white px-6 py-8 space-y-6">
-        <h1 class="text-2xl font-bold">OrganisasiKu</h1>
+<nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <!-- Logo dan Judul -->
+        <div class="flex items-center space-x-3">
+            <img src="{{ asset('logo.png') }}" alt="Logo" class="w-10 h-10">
+            <span class="font-bold text-xl text-blue-600">VolunteerKuy</span>
+        </div>
 
-        <nav class="space-y-2">
-            <a href="{{ route('organization.dashboard') }}" class="block py-2 px-3 rounded hover:bg-blue-600">Dashboard</a>
-            <a href="{{ route('organization.events.index') }}" class="block py-2 px-3 rounded hover:bg-blue-600">Manajemen Event</a>
-            <a href="{{ route('organization.volunteers.index') }}" class="block py-2 px-3 rounded hover:bg-blue-600">Manajemen Relawan</a>
-            <a href="{{ route('organization.donations.index') }}" class="block py-2 px-3 rounded hover:bg-blue-600">Manajemen Donasi</a>
-            <a href="{{ route('organization.profile') }}" class="block py-2 px-3 rounded hover:bg-blue-600">Profil Organisasi</a>
-        </nav>
+        <!-- Menu Navigasi -->
+        <div class="flex space-x-8 text-gray-700 font-medium">
+            <a href="{{ route('organization.dashboard') }}" class="hover:text-blue-600">Dashboard</a>
+            <a href="{{ route('organization.events.index') }}" class="hover:text-blue-600">Manajemen Event</a>
+        </div>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">
-                Logout
+        <!-- Dropdown Profil pakai Alpine -->
+        <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+            <button class="flex items-center space-x-1 focus:outline-none">
+                <span class="text-gray-800 font-semibold">{{ Auth::user()->name }}</span>
+                <svg class="w-4 h-4 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </button>
-        </form>
-    </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 p-8">
-        <h2 class="text-xl font-semibold mb-4">Selamat datang, {{ Auth::user()->name }}!</h2>
-        @yield('content')
-    </main>
-</body>
-</html>
+            <!-- Menu Dropdown -->
+            <div
+                x-show="open"
+                x-transition
+                class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-md z-50"
+                @mouseenter="open = true" @mouseleave="open = false"
+            >
+                <a href="{{ route('organization.profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>

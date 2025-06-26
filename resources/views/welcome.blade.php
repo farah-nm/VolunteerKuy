@@ -37,7 +37,7 @@
         </div>
     </section>
 
-    {{-- Aksi Terbaru --}}
+    {{-- Aksi Terbaru
     <section id="aksi" class="py-10 bg-gradient-to-r from-cyan-400 to-blue-500">
         <div class="max-w-6xl mx-auto text-white px-4">
             <h2 class="text-xl font-semibold mb-6">🔥 Aksi Relawan Terbaru, Yuk Gabung Sekarang!</h2>
@@ -47,7 +47,7 @@
                 @endfor
             </div>
         </div>
-    </section>
+    </section> --}}
 
     {{-- Kenapa Harus VolunteerKuy --}}
     <section class="py-14 bg-white text-center">

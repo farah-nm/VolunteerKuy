@@ -10,12 +10,20 @@ class EventController extends Controller
 {
     public function index(): View
     {
-        $events = VolunteerActivity::where('status', 'published')->latest()->paginate(10);
+
+        $events = VolunteerActivity::with('organizationProfile')
+            ->where('status', 'aktif')
+            ->latest()
+            ->paginate(10);
+
         return view('participant.events.index', compact('events'));
     }
 
     public function show(VolunteerActivity $event): View
     {
+
+        $event->load('organizationProfile');
+
         return view('participant.events.show', compact('event'));
     }
 }

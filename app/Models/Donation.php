@@ -10,17 +10,55 @@ class Donation extends Model
 {
     use HasFactory;
 
-    // ... properti dan method lainnya ...
+    // ini ditambahin el
+    /**
+     * Kolom yang boleh diisi secara massal.
+     */
+    protected $fillable = [
+    'participant_profile_id',
+    'organization_profile_id', // ⬅️ INI WAJIB
+    'volunteer_activity_id',
+    'amount',
+    'payment_method',
+    'proof_path',
+    'status',
+    'notes',
+    'donation_date'
+    ];
+
 
     /**
-     * Get the event that this donation belongs to.
+     * Relasi ke profil partisipan (bukan langsung ke user).
      */
-    public function event(): BelongsTo
+    public function participantProfile(): BelongsTo
     {
-        // Asumsi model event Anda bernama Event
-        return $this->belongsTo(VolunteerActivity::class, 'volunteer_activity_id');
-
-        // Jika model event Anda bernama VolunteerActivity, gunakan ini:
-        // return $this->belongsTo(VolunteerActivity::class);
+        return $this->belongsTo(ParticipantProfile::class);
     }
+
+
+    /**
+     * Relasi ke organisasi tujuan.
+     */
+    public function organizationProfile(): BelongsTo
+    {
+        return $this->belongsTo(OrganizationProfile::class);
+    }
+// sampai sini
+
+    /**
+     * Get the volunteer activity that this donation belongs to.
+     */
+    public function volunteerActivity(): BelongsTo
+    {
+        return $this->belongsTo(VolunteerActivity::class, 'volunteer_activity_id');
+    }
+
+    // /**
+    //  * Get the user who made the donation.
+    //  */
+    // public function user(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
+
 }

@@ -31,4 +31,17 @@ class ParticipantProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function applications()
+    {
+    return $this->hasMany(Application::class, 'participant_profile_id');
+    }
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, 'participant_profile_id');
+    }
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'participant_profile_id');
+    }
 }

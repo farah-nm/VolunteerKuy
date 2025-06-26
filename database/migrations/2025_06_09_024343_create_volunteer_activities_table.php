@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('contact_email');
             $table->string('contact_phone')->nullable();
             $table->string('banner_image_path')->nullable();
-            $table->enum('status', ['draft', 'pending_approval', 'approved', 'rejected', 'ongoing', 'completed', 'cancelled'])->default('draft');
+            $table->string('status')->default('aktif');
             $table->integer('slots_available')->nullable();
             $table->boolean('is_public')->default(true);
             $table->timestamps();
